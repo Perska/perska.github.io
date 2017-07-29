@@ -20,12 +20,16 @@
 	<body style="background-color: #080808">
 		<noscript>This game uses JavaScript to run. Please enable to play.</noscript>
 		<pre id="game"></pre>
-		<input id="input" type="text" style="width: 45ch">
+		<form>
+			<input id="input" type="text" style="width: 45ch">
+			<input id="conf" type="submit" value="Send" style="width: 4ch">
+		</form>
 		<script>
 			'use strict';
 			var disp = document.getElementById("game");
 			var field = document.getElementById("input");
-			field.onsubmit = function(){
+			var button = document.getElementById("conf");
+			button.onclick = function(){
 				disp.innerHTML += "field.value";
 				field.value = "";
 			}
