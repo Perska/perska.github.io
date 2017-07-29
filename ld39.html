@@ -1,6 +1,9 @@
 <html>
 	<head>
 		<style>
+			*{
+				font-family: monospace;
+			}
 			pre{
 				white-space: pre-wrap;
 				white-space: -moz-pre-wrap;
@@ -16,15 +19,16 @@
 	</head>
 	<body style="background-color: #080808">
 		<noscript>This game uses JavaScript to run. Please enable to play.</noscript>
-		<pre id="game">
-Welcome.
-Enter "start" to start,
-""
-		</pre>
-		<input type="text" value=>
+		<pre id="game"></pre>
+		<input id="input" type="text" style="width: 30em">
 		<script>
 			'use strict';
-			
+			var disp = document.getElementById("game");
+			var field = document.getElementById("");
+			field.onsubmit = function(){
+				disp.innerHTML += "field.value";
+				field.value = "";
+			}
 		</script>
 		<!-- Man, that JS styling looks really bad with inspect element. Oh well. -->
 	</body>
