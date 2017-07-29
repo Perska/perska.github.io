@@ -17,8 +17,8 @@
 			ctx.stroke();
 			
 			size.onchange = function(){
-				c.style.width = (100 * Number(size)) + "px";
-				console.log(size);
+				c.style.width = (100 * Number(size.value)) + "px";
+				console.log(size.value);
 			}
 		</script>
 		<!-- Man, that JS styling looks really bad with inspect element. Oh well. -->
