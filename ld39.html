@@ -1,10 +1,22 @@
 <html>
 	<body>
 		<noscript>This game uses JavaScript to run. Please enable to play.</noscript>
+		<input id="scale" type="range" min="1" max="4" value="1" onchange="cSize()"> 
 		<canvas id="canvas" width="320" height="240">Your browser does not support the canvas element.</canvas>
 		<script>
 			'use strict';
 			var c = document.getElementById("canvas");
+			var ctx = c.getContext("2d");
+			var size = document.getElementById("scale");
+			
+			ctx.moveTo(0,0);
+			ctx.lineTo(319,239);
+			ctx.stroke();
+			
+			function cSize(){
+				c.style.width = (100 * size) + "px";
+			}
 		</script>
+		<!-- Man, that JS styling looks really bad with inspect element. Oh well. -->
 	</body>
 </html>
