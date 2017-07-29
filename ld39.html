@@ -17,8 +17,10 @@
 			var size = document.getElementById("scale");
 			var sDisp = document.getElementById("scDisp");
 			
-			ctx.moveTo(0,0);
-			ctx.lineTo(319,239);
+			ctx.fillStyle = "cornflowerblue";
+			ctx.fillRect(0,0,320,240);
+			ctx.moveTo(1,1);
+			ctx.lineTo(320,240);
 			ctx.stroke();
 			
 			size.oninput = function(){
