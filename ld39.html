@@ -10,29 +10,91 @@
 				white-space: -pre-wrap;
 				white-space: -o-pre-wrap;
 				word-wrap: break-word;
-				width: 60ch;
+				width: calc(60ch+);
 				height: 30ch;
 				border: 1px #8F8F8F;
 				background-color: #F0F0F0;
+				overflow-y: scroll;
+			}
+			.scrollbar-measure {
+				width: 100px;
+				height: 100px;
+				overflow: scroll;
+				position: absolute;
+				top: -9999px;
 			}
 		</style>
+		<title>LD39 Game</title>
 	</head>
 	<body style="background-color: #080808">
 		<noscript>This game uses JavaScript to run. Please enable to play.</noscript>
 		<pre id="game"></pre>
-		<form>
-			<input id="input" type="text" style="width: 45ch">
-			<input id="conf" type="submit" value="Send" style="width: 12ch">
-		</form>
+		<input id="input" type="text" autocomplete="off" style="width: 45ch">
+		<input id="conf" type="button" value="Send" style="width: 12ch">
 		<script>
-			'use strict';
+			//'use strict';
 			var disp = document.getElementById("game");
 			var field = document.getElementById("input");
 			var button = document.getElementById("conf");
-			button.onclick = function(){
-				disp.innerHTML += "field.value";
+			var txtpos = 0;
+			var text = 'Ludum Dare 39 Game - [game title goes here]\nType:\n"start" to start\n"help" for help\n"about" for info\n';
+			var context = 0;
+			function loop() {
+				if(txtpos<text.length) {
+					disp.innerHTML += text[txtpos];
+					txtpos++;
+					disp.scrollTop = disp.scrollHeight;
+				}
+				requestAnimationFrame(loop);
+			}
+			requestAnimationFrame(loop);
+			
+			field.onkeydown = function(e) {
+				if(e.key == "Enter") {
+					button.click();
+				}
+			}
+			
+			button.onclick = function() {
+				var remove = true;
+				if(txtpos<text.length) return;
+				if(context == 0) {
+					if(field.value == "start") {
+						
+					} else if(field.value == "help") {
+					
+					} else if(field.value == "about") {
+						context = 1;
+						disp.innerHTML = "";
+						txtpos = 0;
+						text = '"Game title here" is a game I created for Ludum Dare 39.\nThe theme was "Running out of power"\nEnter anything to continue to the menu...'
+					} else {
+						text += '"' + field.value + '" is not a valid command. Try again.\n';
+					}
+				} else if(context == 1) {
+					if(field.value!="") {
+						context = 0;
+						disp.innerHTML = "";
+						txtpos = 0;
+						text = 'Ludum Dare 39 Game - [game title goes here]\nType:\n"start" to start\n"help" for help\n"about" for info\n';
+					}
+				}
 				field.value = "";
 			}
+			
+			//shamelessly copied from https://davidwalsh.name/detect-scrollbar-width
+			// Create the measurement node
+			var scrollDiv = document.createElement("div");
+			scrollDiv.className = "scrollbar-measure";
+			document.body.appendChild(scrollDiv);
+			
+			// Get the scrollbar width
+			var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+			disp.style.width = "calc(60ch + " + scrollbarWidth + "px)";
+			console.log(scrollbarWidth);
+			
+			// Delete the DIV 
+			document.body.removeChild(scrollDiv);
 		</script>
 		<!-- Man, that JS styling looks really bad with inspect element. Oh well. -->
 	</body>
