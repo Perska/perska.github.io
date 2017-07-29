@@ -10,15 +10,15 @@
 			var c = document.getElementById("canvas");
 			var ctx = c.getContext("2d");
 			var size = document.getElementById("scale");
-			
+			var sDisp = document.getElementById("scDisp");
 			
 			ctx.moveTo(0,0);
 			ctx.lineTo(319,239);
 			ctx.stroke();
 			
-			size.onchange = function(){
-				c.style.width = (100 * Number(size.value)) + "px";
-				console.log(size.value);
+			size.oninput = function(){
+				c.style.width = (320 * Number(size.value)) + "px";
+				sDisp.innerHtml = "Canvas Size: " + size.value;
 			}
 		</script>
 		<!-- Man, that JS styling looks really bad with inspect element. Oh well. -->
