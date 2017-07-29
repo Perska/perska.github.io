@@ -23,11 +23,15 @@
 				position: absolute;
 				top: -9999px;
 			}
+			p{
+				color: white;
+			}
 		</style>
 		<title>LD39 Game</title>
 	</head>
 	<body style="background-color: #080808">
 		<noscript>This game uses JavaScript to run. Please enable to play.</noscript>
+		<p>If there are any issues with the game, do tell me in the Ludum Dare game page's comments.</p>
 		<pre id="game"></pre>
 		<input id="input" type="text" autocomplete="off" style="width: 45ch">
 		<input id="conf" type="button" value="Send" style="width: 12ch">
@@ -39,8 +43,21 @@
 			var txtpos = 0;
 			var text = 'Ludum Dare 39 Game - [game title goes here]\nType:\n"start" to start\n"help" for help\n"about" for info\n';
 			var context = 0;
+			var wait = 0;
+			
 			function loop() {
+				if(wait > 0) {
+					wait--;
+					requestAnimationFrame(loop);
+					return;
+				}
 				if(txtpos<text.length) {
+					if(text[txtpos] == "\r") {
+						wait = 30;
+						txtpos++;
+						requestAnimationFrame(loop);
+						return;
+					}
 					disp.innerHTML += text[txtpos];
 					txtpos++;
 					disp.scrollTop = disp.scrollHeight;
@@ -48,6 +65,12 @@
 				requestAnimationFrame(loop);
 			}
 			requestAnimationFrame(loop);
+			
+			function clearT(){
+				disp.innerHTML = "";
+				txtpos = 0;
+				text = '';
+			}
 			
 			field.onkeydown = function(e) {
 				if(e.key == "Enter") {
@@ -60,24 +83,42 @@
 				if(txtpos<text.length) return;
 				if(context == 0) {
 					if(field.value == "start") {
-						
+						context = 2;
+						clearT();
+						text = 'Tuesday, 08:00, At home\n(The alarm clock is ringing.)\nWhat do you do?\nget up\nignore\n';
 					} else if(field.value == "help") {
-					
+						context = 1;
+						clearT();
+						text = 'This game is a text adventure, so you type to do stuff.\nIf you don\'t know what to do and the game didn\'t give you options, you can type "help" for what you can do.\nAlso, you don\'t have to click Send. You can press Enter when the text box is active.\nBefore I forget, I should mention that commands are context specific and not all work in all situations.\nEnter anything to continue to the menu...';
 					} else if(field.value == "about") {
 						context = 1;
-						disp.innerHTML = "";
-						txtpos = 0;
-						text = '"Game title here" is a game I created for Ludum Dare 39.\nThe theme was "Running out of power"\nEnter anything to continue to the menu...'
+						clearT();
+						text = '"Game title here" is a game I created for Ludum Dare 39.\nThe theme was "Running out of power"\nAs you can see, it\'s a text adventure.\nEnter anything to continue to the menu...'
 					} else {
 						text += '"' + field.value + '" is not a valid command. Try again.\n';
 					}
 				} else if(context == 1) {
-					if(field.value!="") {
+					if(field.value != "") {
 						context = 0;
-						disp.innerHTML = "";
-						txtpos = 0;
+						clearT();
 						text = 'Ludum Dare 39 Game - [game title goes here]\nType:\n"start" to start\n"help" for help\n"about" for info\n';
 					}
+				} else if(context == 2) {
+					if(field.value != "") {
+						disp.innerHTML += ">" + field.value + "\n";
+						if(field.value == "get up") {
+							text += "Before you turn the alarm off, it stopped itself.\r\nThe batteries probably died.\r\nYou get up.\r It's time to go make breakfast.\n";
+							context = 3;
+						} else if(field.value == "ignore") {
+							text += "You ignore the alarm clock.\n\r\rSuddenly, it stopped ringing.\r Maybe the batteries died?\r\r\nYou get up.\r It's time to go make breakfast.\n"
+							context = 3;
+							//wew \r I am very not lazy with implementing stuff
+						} else {
+							text += "Try again.\n";
+						}
+					}
+				} else if(context == 3) {
+					
 				}
 				field.value = "";
 			}
