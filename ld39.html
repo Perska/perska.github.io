@@ -10,13 +10,13 @@
 			var c = document.getElementById("canvas");
 			var ctx = c.getContext("2d");
 			var size = document.getElementById("scale");
-			size.onchange="cSize()";
+			
 			
 			ctx.moveTo(0,0);
 			ctx.lineTo(319,239);
 			ctx.stroke();
 			
-			function cSize(){
+			size.onchange = function(){
 				c.style.width = (100 * Number(size)) + "px";
 				console.log(size);
 			}
