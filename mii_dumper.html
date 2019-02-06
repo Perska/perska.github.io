@@ -1,0 +1,63 @@
+<html>
+	<head>
+		<title>Mii Icon dumper</title>
+	</head>
+	<body>
+		<h1>Mii Icon dumper for My Nintendo</h1>
+		<p>To get your Mii icon url, right click the Mii on the top right corner of the page OR in the menu that pops up, next to your name.</p>
+		<img src="GetMii.png">
+		<p>Copy the URL and paste it here. MAKE SURE YOU COPY THE FULL URL, INCLUDING THE HTTPS://</p>
+		<input id="miiUrl" type="text">
+		<input type="button" value="Get Mii!" onclick="getMii()">
+		<p id="status">Awaiting action...</p>
+		<script>
+			var loadedAssets, totalAssets;
+			function getMii(){
+				var miiMan = document.getElementById("miiUrl").value;
+				miiMan = miiMan.split('?')[0];
+				console.log(miiMan);
+				totalAssets = 0;
+				loadedAssets = 0;
+				addMii(miiMan+"?expression=normal");
+				addMii(miiMan+"?expression=normal_open_mouth");
+				addMii(miiMan+"?expression=smile");
+				addMii(miiMan+"?expression=smile_open_mouth");
+				addMii(miiMan+"?expression=anger");
+				addMii(miiMan+"?expression=anger_open_mouth");
+				addMii(miiMan+"?expression=frustrated");
+				//addMii(miiMan+"?expression=frustrated_open_mouth"); // apparently, you can't talk while frustrated
+				addMii(miiMan+"?expression=surprise");
+				addMii(miiMan+"?expression=surprise_open_mouth");
+				addMii(miiMan+"?expression=blink");
+				addMii(miiMan+"?expression=blink_open_mouth");
+				
+				
+				awaitAssets();
+			}
+			
+			function addMii(elem){
+				document.body.appendChild(loadImage(elem+"&type=face&width=512&splitMode=both&instanceCount=8&instanceRotationMode=model"));
+				document.body.appendChild(document.createElement("br"));
+			}
+			
+			function awaitAssets(){
+				document.getElementById("status").innerHTML = "Getting image "+loadedAssets+" of "+totalAssets;
+				if(loadedAssets!=totalAssets){
+					requestAnimationFrame(awaitAssets);
+				} else {
+					document.getElementById("status").innerHTML = "Done! You can save the images now.";
+				}
+			}
+			
+			function loadImage(file){
+				var output = document.createElement("img");
+				output.src = file;
+				totalAssets++;
+				output.addEventListener("load",function(){
+					loadedAssets++;
+				});
+				return output;
+			}
+		</script>
+	<body>
+</html>
