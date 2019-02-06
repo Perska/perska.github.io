@@ -1,0 +1,38 @@
+<html>
+	<body>
+		<p id="persona">Use the sliders!</p>
+		Movement<br>Slow
+		<input id="slida" type="range" min="0" max="7" value="0">Fast<br><br>
+		Speech<br>Polite
+		<input id="slidb" type="range" min="0" max="7" value="0">Direct<br><br>
+		Expressiveness<br>Flat
+		<input id="slidc" type="range" min="0" max="7" value="0">Varied<br><br>
+		Attitude<br>Serious
+		<input id="slidd" type="range" min="0" max="7" value="0">Relaxed<br>
+		<script>
+var personaTable = ["Independent", "Confident", "Easygoing", "Outgoing"]
+var subPersona = [["Lone Wolf", "Thinker", "Free Spirit", "Artist"], ["Brainiac", "Go-getter", "Designer", "Adventurer"], ["Buddy", "Dreamer", "Softie", "Optimist"], ["Charmer", "Leader", "Trendsetter", "Entertainer"]];
+
+var update = function(){
+	var axisX, axisY;
+	axisX = slidb.value - 0;
+	if (axisX > 3) axisX++;
+	axisX += slida.value - 0;
+
+	axisY = slidd.value - 0;
+	if (axisY > 3) axisY++;
+	axisY += slidc.value - 0;
+
+	var primary = (axisX / 8 | 0) + (axisY / 8 | 0) * 2
+	var secondary = ((axisX % 8) / 4 | 0) + ((axisY % 8) / 4 | 0) * 2;
+
+	persona.innerHTML = personaTable[primary] + " " + subPersona[primary][secondary] + " " + "|X" + axisX + "|Y" + axisY;
+}
+slida.onchange = update;
+slidb.onchange = update;
+slidc.onchange = update;
+slidd.onchange = update;
+
+		</script>
+	</body>
+</html>
