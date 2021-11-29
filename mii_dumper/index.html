@@ -40,7 +40,7 @@
 			}
 			
 			function addMii(elem){
-				if (document.querySelector('[name="close"]:checked').value == "dosplit") {
+				if (document.querySelector('[name="split"]:checked').value == "dosplit") {
 					document.body.appendChild(loadImage(elem+"&type=face&width=512&splitMode=both&instanceCount=8&instanceRotationMode=model"));
 				} else {
 					document.body.appendChild(loadImage(elem+"&type=face&width=512&instanceCount=8&instanceRotationMode=model"));
