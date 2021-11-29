@@ -6,11 +6,16 @@
 		<h1>Mii Icon dumper for My Nintendo</h1>
 		<p>To get your Mii icon url, right click the Mii on the top right corner of the page OR in the menu that pops up, next to your name.</p>
 		<img src="GetMii.png">
+		<label><input type="radio" name="split" value="nosplit">Don't split the renders</label>
+		<label><input type="radio" name="split" value="dosplit">Split the renders into front and back halves</label>
+
 		<p>Copy the URL and paste it here. MAKE SURE YOU COPY THE FULL URL, INCLUDING THE HTTPS://</p>
 		<input id="miiUrl" type="text">
 		<input type="button" value="Get Mii!" onclick="getMii()">
 		<p id="status">Awaiting action...</p>
 		<script>
+			document.querySelector('[name="close"]').checked = true
+			
 			var loadedAssets, totalAssets;
 			function getMii(){
 				var miiMan = document.getElementById("miiUrl").value;
@@ -36,7 +41,11 @@
 			}
 			
 			function addMii(elem){
-				document.body.appendChild(loadImage(elem+"&type=face&width=512&splitMode=both&instanceCount=8&instanceRotationMode=model"));
+				if (document.querySelector('[name="close"]:checked').value == "dosplit") {
+					document.body.appendChild(loadImage(elem+"&type=face&width=512&splitMode=both&instanceCount=8&instanceRotationMode=model"));
+				} else {
+					document.body.appendChild(loadImage(elem+"&type=face&width=512&instanceCount=8&instanceRotationMode=model"));
+				}
 				document.body.appendChild(document.createElement("br"));
 			}
 			
@@ -45,7 +54,7 @@
 				if(loadedAssets!=totalAssets){
 					requestAnimationFrame(awaitAssets);
 				} else {
-					document.getElementById("status").innerHTML = "Now creating ZIP file...";
+					document.getElementById("status").innerHTML = "All done. Unfortunately, you will need to manually download the images yourself.";
 				}
 			}
 			
