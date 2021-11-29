@@ -15,8 +15,6 @@
 		<input type="button" value="Get Mii!" onclick="getMii()">
 		<p id="status">Awaiting action...</p>
 		<script>
-			document.querySelector('[name="close"]').checked = true
-			
 			var loadedAssets, totalAssets;
 			function getMii(){
 				var miiMan = document.getElementById("miiUrl").value;
@@ -68,6 +66,8 @@
 				});
 				return output;
 			}
+			
+			document.querySelector('[name="split"]').checked = true
 		</script>
 	<body>
 </html>
