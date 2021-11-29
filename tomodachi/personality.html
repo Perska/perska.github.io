@@ -11,8 +11,14 @@
 		<input id="slidd" type="range" min="0" max="7" value="0">Relaxed<br><br>
 		The Overall value is not used to determine a personality.
 		<script>
-var personaTable = ["Independent", "Confident", "Easygoing", "Outgoing"]
-var subPersona = [["Lone Wolf", "Thinker", "Free Spirit", "Artist"], ["Brainiac", "Go-getter", "Designer", "Adventurer"], ["Buddy", "Dreamer", "Softie", "Optimist"], ["Charmer", "Leader", "Trendsetter", "Entertainer"]];
+var personaTable = {
+	"US": ["Independent", "Confident", "Easygoing", "Outgoing"],
+	"EU": ["Reserved", "Confident", "Easy-going", "Energetic"]
+}
+var subPersona = {
+	"US": [["Lone Wolf", "Thinker", "Free Spirit", "Artist"], ["Brainiac", "Go-getter", "Designer", "Adventurer"], ["Buddy", "Dreamer", "Softie", "Optimist"], ["Charmer", "Leader", "Trendsetter", "Entertainer"]],
+	"EU": [["Introvert", "Thinker", "Do-Gooder", "Perfectionist"], ["Free-Spirit", "Go-getter", "Busy-Bee", "Leader"], ["Carer", "Dreamer", "Softie", "Optimist"], ["Buddy", "Extrovert", "Charmer", "Adventurer"]]
+};
 
 var update = function(){
 	var axisX, axisY;
@@ -27,13 +33,17 @@ var update = function(){
 	var primary = (axisX / 8 | 0) + (axisY / 8 | 0) * 2
 	var secondary = ((axisX % 8) / 4 | 0) + ((axisY % 8) / 4 | 0) * 2;
 
-	persona.innerHTML = personaTable[primary] + " " + subPersona[primary][secondary] + " " + "|X" + axisX + "|Y" + axisY;
+	persona.textContent = personaTable.US[primary] + " " + subPersona.US[primary][secondary] + "/" + personaTable.EU[primary] + " " + subPersona.EU[primary][secondary] + " " + "|X" + axisX + "|Y" + axisY;
 }
 slida.onchange = update;
 slidb.onchange = update;
 slidc.onchange = update;
 slidd.onchange = update;
-
+slida.onmousemove = update;
+slidb.onmousemove = update;
+slidc.onmousemove = update;
+slidd.onmousemove = update;
+			
 		</script>
 	</body>
 </html>
