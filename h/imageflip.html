@@ -1,0 +1,42 @@
+<!doctype html>
+<body>
+<style>
+img, canvas {
+	image-rendering: -moz-crisp-edges;
+	image-rendering: pixelated;
+	width: 200px;
+	height: 200px;
+}
+#h:checked ~ .i{
+	transform: scaleX(-1);
+}
+#v:checked ~ .i{
+	transform: scaleY(-1);
+}
+#o:checked ~ .i{
+	opacity: 0.9;
+}
+#t:checked ~ .i{
+	transform: scaleY(1);
+}
+</style>
+<input id=h type=checkbox checked=false><label for=a>transform: scaleX(-1)</label><br>
+<input id=v type=checkbox checked=false><label for=a>transform: scaleY(-1)</label><br>
+<input id=o type=checkbox checked=false><label for=a>opacity: 0.9</label><br>
+<input id=t type=checkbox checked=false><label for=a>transform: scaleY(1)</label><br>
+<br>
+Image<br>
+<img class=i id=a width=100 height=100><br>
+Canvas<br>
+<canvas class=i id=b width=100 height=100></canvas>
+<script>
+img = document.getElementById("a")
+img.onload = f
+img.src = "test.gif"
+function f() {
+	canvas = document.getElementById("b")
+	ctx = canvas.getContext("2d")
+	ctx.drawImage(img,0,0)
+}
+</script>
+</body>
