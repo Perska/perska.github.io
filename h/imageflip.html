@@ -22,6 +22,9 @@ img, canvas {
 #t:checked ~ .i{
 	transform: scaleY(1);
 }
+#h:checked ~ #i:checked ~ .i{
+	transform: scale(-1,1);
+}
 </style>
 <input id=h type=checkbox><label for=a>transform: scaleX(-1)</label><br>
 <input id=v type=checkbox><label for=a>transform: scaleY(-1)</label><br>
