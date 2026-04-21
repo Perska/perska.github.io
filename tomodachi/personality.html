@@ -1,24 +1,161 @@
+<!doctype html>
 <html>
-	<body>
-		<p id="persona">Use the sliders!</p>
-		Movement<br>Slow
-		<input id="slida" type="range" min="0" max="7" value="0">Fast<br><br>
-		Speech<br>Polite
-		<input id="slidb" type="range" min="0" max="7" value="0">Direct<br><br>
-		Expressiveness<br>Flat
-		<input id="slidc" type="range" min="0" max="7" value="0">Varied<br><br>
-		Attitude<br>Serious
-		<input id="slidd" type="range" min="0" max="7" value="0">Relaxed<br><br>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<style>
+			input[type="range"]	{
+				appearance: none;
+				background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAAAQCAYAAADeWHeIAAAAAXNSR0IB2cksfwAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAPFJREFUaN7tmSEKAlEYhP+3aBI9gFEwGsRocA9gNngD8QSCUfAE4g0MZg+gQdgiBqNgtKuYBNe04D9ttr6Z9P7wpRle+cL3keWmRJtK8ZhejhS46vTdvbhfKX7ebLt783xR/LhRd/f+XaX4tPZxd7idKD5v9Tx/3nJ8d+T5w5LjBzPP7yYcP1ybmVlSpnxk2PKRYctHhi0fGbZ8ZNjykWHLR4Yt/59J9AnGHQ1AA1A0AEUDUDQARQNQNABFA1A0AEUDUKIZAIodI2UQih0jZRCKHSNlEIodI2UQih0jZRCKHVYGodhhZVAhdsrIoCAdHHd+Q8pPjTeRR+EAAAAASUVORK5CYII=");
+				background-size: cover;
+				width: 128px;
+				height: 16px;
+			}
+			table p {
+				margin: 0;
+			}
+			#\$grid {
+				color: black;
+			}
+			#\$cursor[data-set] {
+				position: relative;
+				width: 16px;
+				height: 16px;
+				background: white;
+				outline: gray 2px solid;
+			}
+
+			@media (prefers-color-scheme: dark) {
+				body {
+					background: black;
+					color: white;
+					color-scheme: dark;
+				}
+			}
+		</style>
+	</head>
+	<body color>
+		Use the sliders!
+		<table>
+		<tbody>
+		<tr>
+		<th align=left>Movement
+		<td align=right>Slow
+		<td><input id="slida" type="range" min="0" max="7" value="0">
+		<td>Fast/Quick
+		<tr>
+		<th align=left>Speech
+		<td align=right>Polite
+		<td><input id="slidb" type="range" min="0" max="7" value="0">
+		<td>Direct/Honest
+		<tr>
+		<th align=left>Expressiveness/Energy
+		<td align=right>Flat
+		<td><input id="slidc" type="range" min="0" max="7" value="0">
+		<td>Varied
+		<tr>
+		<th align=left>Attitude/Thinking
+		<td align=right>Serious
+		<td><input id="slidd" type="range" min="0" max="7" value="0">
+		<td>Relaxed/Chill
+		</table>
 		The Overall value is not used to determine a personality.
+
+		<p id="persona">Personality will be listed here.</p>
+		Moving the sliders will move the box below. The box's location in the grid corresponds to a personality type listed below.
+		<div style="width: 256px; height: 256px; background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAIAAABMXPacAAAAAXNSR0IB2cksfwAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAuIwAALiMBeKU/dgAAAdBJREFUeNrt3D9LVmEYx/HfIyKkITh4QBs0/2wtTZY2CA0hOLjZHoJjr6DBt+CQS3tjQyAOQUulk0tTmuXgkA6CZEKENDwvIS/i6Of7Ai6ec3+4z1nu++n8eJlW13x51Orf35ukWXhVNP1481mSZmmmav6bnSR5sFa1PNsvkuTneNX82997ov8aAAAABACAAAAQAAACAEAAAAgAAAEAIAAABACAAAAQAAACAEAArk8dx9PtgBtdb5Jm7nHR9OMP75I091ar5n/eSJKph1XLs/8pSYbKlv/UDvAKAiAAAAQAgAAAEAAAAgBAAAAIAAABACAAAAQAgAAAEAAAAgBAcT8g1+Pv65f/PG/1A4yOrLT+fsDT2aOi6a8/3knyfup+0fz5/d0kw4tjRfNP3h4m2RueKJo/fXLgG+AjDEAAAAgAAAEAIAAABACAAAAQAAACAEAAAAgAAAEAIAAABACArqjO/HrLj6dfrNgByj/dD7j4PVk0/Vbf1yR7/adF86d/DSUZPL9bNP9s4FuSJz1V9wO2Lt0P8AoCIAAABACAAAAQAAACAEAAAAgAAAEAIAAABACAAAAQAAACAEC5wtPR3TPMdXXPMNfVPcNc19blQd3wv+WEP6o3kczjAAAAAElFTkSuQmCC'); background-size: cover;">
+		<div id=$cursor></div>
+		</div>
+
+		<table id=$grid>
+		<tr>
+		<th bgcolor="e99700" colspan=2>
+		<th bgcolor="ff713c" colspan=2>
+		<tr>
+		<td bgcolor="ffe09d">
+		<td bgcolor="ffe737">
+		<td bgcolor="ffa9be">
+		<td bgcolor="ff655c">
+		<tr>
+		<td bgcolor="ffd243">
+		<td bgcolor="ffc368">
+		<td bgcolor="ff9575">
+		<td bgcolor="ff823c">
+		<tr>
+		<th bgcolor="409370" colspan=2>
+		<th bgcolor="5a8ad5" colspan=2>
+		<tr>
+		<td bgcolor="98cd55">
+		<td bgcolor="00b7a1">
+		<td bgcolor="6fd6f4">
+		<td bgcolor="359ff7">
+		<tr>
+		<td bgcolor="378d93">
+		<td bgcolor="1b9d5f">
+		<td bgcolor="687ff6">
+		<td bgcolor="a18cf7">
+		</table>
 		<script>
+var ambiguity = {"Charmer": true}
+var languages = {
+	"US-3DS": "US English (3DS)",
+	"US-NSW": "US English (Switch)",
+	"EU-3DS": "EU English (3DS)",
+	"EU-NSW": "EU English (Switch)",
+}
 var personaTable = {
-	"US": ["Independent", "Confident", "Easygoing", "Outgoing"],
-	"EU": ["Reserved", "Confident", "Easy-going", "Energetic"]
+	"US-3DS": ["Independent", "Confident", "Easygoing", "Outgoing"],
+	"US-NSW": ["Reserved", "Ambitious", "Considerate", "Outgoing"],
+	"EU-3DS": ["Reserved", "Confident", "Easy-going", "Energetic"],
+	"EU-NSW": ["Reserved", "Confident", "Easy-going", "Energetic"]
 }
 var subPersona = {
-	"US": [["Lone Wolf", "Thinker", "Free Spirit", "Artist"], ["Brainiac", "Go-getter", "Designer", "Adventurer"], ["Buddy", "Dreamer", "Softie", "Optimist"], ["Charmer", "Leader", "Trendsetter", "Entertainer"]],
-	"EU": [["Introvert", "Thinker", "Do-Gooder", "Perfectionist"], ["Free-Spirit", "Go-getter", "Busy-Bee", "Leader"], ["Carer", "Dreamer", "Softie", "Optimist"], ["Buddy", "Extrovert", "Charmer", "Adventurer"]]
+	"US-3DS": [
+		["Lone Wolf", "Thinker", "Free Spirit", "Artist"],
+		["Brainiac", "Go-getter", "Designer", "Adventurer"],
+		["Buddy", "Dreamer", "Softie", "Optimist"],
+		["Charmer", "Leader", "Trendsetter", "Entertainer"]
+	],
+	"US-NSW": [
+		["Observer", "Thinker", "Strategist", "Perfectionist"],
+		["Rogue", "Maverick", "Achiever", "Visionary"],
+		["Buddy", "Daydreamer", "Sweetie", "Cheerleader"],
+		["Merrymaker", "Dynamo", "Charmer", "Go-Getter"]
+	],
+	"EU-3DS": [
+		["Introvert", "Thinker", "Do-Gooder", "Perfectionist"],
+		["Free-Spirit", "Go-getter", "Busy-Bee", "Leader"],
+		["Carer", "Dreamer", "Softie", "Optimist"],
+		["Buddy", "Extrovert", "Charmer", "Adventurer"]
+	],
+	"EU-NSW": [
+		["Introvert", "Thinker", "Patient", "Perfectionist"],
+		["Individualist", "Headstrong", "Busy Bee", "Leader"],
+		["Carer", "Dreamer", "Softie", "Optimist"],
+		["Bubbly", "Hot-Blooded", "Charmer", "Adventurer"]
+	]
 };
+
+main = $grid.querySelectorAll("th")
+sub = $grid.querySelectorAll("td")
+langs = Object.keys(languages)
+for (var i=0;i<langs.length;i++) {
+	for (var j=0;j<4;j++) {
+		var text = personaTable[langs[i]][(j+2)%4]
+		if (main[j].textContent.includes(text)) continue
+		var elem = document.createElement("p")
+		elem.textContent = text
+		main[j].appendChild(elem)
+	}
+	for (var j=0;j<16;j++) {
+		var text = subPersona[langs[i]][(((j % 4) / 2 | 0) + (j / 8 | 0) * 2 + 2)%4][(j % 2 + ((j/4) % 2 | 0) * 2 + 2) % 4]
+		if (ambiguity[text]) text = `(${langs[i]}) ${text}`
+		if (sub[j].textContent.includes(text)) continue
+		var elem = document.createElement("p")
+		elem.textContent = text
+		sub[j].appendChild(elem)
+	}
+}
 
 var update = function(){
 	var axisX, axisY;
@@ -30,19 +167,23 @@ var update = function(){
 	if (axisY > 3) axisY++;
 	axisY += slidc.value - 0;
 
+	$cursor.dataset.set = true
+	$cursor.style = `top: ${(15-axisY)*16}px; left: ${axisX*16}px`
+
 	var primary = (axisX / 8 | 0) + (axisY / 8 | 0) * 2
 	var secondary = ((axisX % 8) / 4 | 0) + ((axisY % 8) / 4 | 0) * 2;
 
-	persona.textContent = personaTable.US[primary] + " " + subPersona.US[primary][secondary] + "/" + personaTable.EU[primary] + " " + subPersona.EU[primary][secondary] + " " + "|X" + axisX + "|Y" + axisY;
+	var m = ""
+	for (var i = 0;i<langs.length;i++) {
+		var add = `${personaTable[langs[i]][primary]} ${subPersona[langs[i]][primary][secondary]}`
+		if (m.includes(add)) continue;
+		if (i!=0) m+="/"
+		m+=`${personaTable[langs[i]][primary]} ${subPersona[langs[i]][primary][secondary]}`
+	}
+	persona.textContent = m + "|X" + axisX + "|Y" + axisY
+	/*persona.textContent = personaTable.US[primary] + " " + subPersona.US[primary][secondary] + "/" + personaTable.EU[primary] + " " + subPersona.EU[primary][secondary] + " " + "|X" + axisX + "|Y" + axisY;*/
 }
-slida.onchange = update;
-slidb.onchange = update;
-slidc.onchange = update;
-slidd.onchange = update;
-slida.onmousemove = update;
-slidb.onmousemove = update;
-slidc.onmousemove = update;
-slidd.onmousemove = update;
+slida.onchange = slidb.onchange = slidc.onchange = slidd.onchange = slida.onmousemove = slidb.onmousemove = slidc.onmousemove = slidd.onmousemove = update;
 			
 		</script>
 	</body>
